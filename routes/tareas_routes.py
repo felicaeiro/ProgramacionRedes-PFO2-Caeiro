@@ -1,12 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 tareas_bp = Blueprint("tareas", __name__)
 
 
 @tareas_bp.route("/tareas", methods=["GET"])
 def tareas():
-
-    return """
-    <h1>Bienvenido al Sistema de Gestión de Tareas</h1>
-    <p>La API está funcionando correctamente.</p>
-    """
+    return render_template("tareas.html")

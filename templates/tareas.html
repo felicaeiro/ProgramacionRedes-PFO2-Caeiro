@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #333; }
+        form { border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+        button { margin-top: 14px; padding: 10px 16px; cursor: pointer; }
+        .response { white-space: pre-wrap; background: #f1f1f1; padding: 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido al Sistema de Gestión de Tareas</h1>
+    <p>Usa el formulario para registrar un nuevo usuario o iniciar sesión. El botón que pulses decidirá si se envía a `/registro` o a `/login`.</p>
+
+    <form id="auth-form">
+        <h2>Registro / Login</h2>
+        <label for="auth-usuario">Usuario</label>
+        <input id="auth-usuario" name="usuario" type="text" required>
+        <label for="auth-contraseña">Contraseña</label>
+        <input id="auth-contraseña" name="contraseña" type="password" required>
+        <button id="register-button" type="submit" name="action" value="register">Registrar</button>
+        <button id="login-button" type="submit" name="action" value="login">Login</button>
+    </form>
+
+    <section>
+        <h2>Respuesta de la API</h2>
+        <div id="response" class="response">Aquí aparecerá la respuesta del servidor.</div>
+    </section>
+
+    <script>
+        const responseBox = document.getElementById('response');
+
+        async function enviarFormulario(url, datos) {
+            const resp = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+            const texto = await resp.text();
+            responseBox.textContent = `Status: ${resp.status}\n${texto}`;
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const boton = event.submitter;
+            const action = boton.value === 'register' ? '/registro' : '/login';
+            const datos = {
+                usuario: document.getElementById('auth-usuario').value,
+                contraseña: document.getElementById('auth-contraseña').value
+            };
+
+            enviarFormulario(action, datos);
+        });
+    </script>
+</body>
+</html>

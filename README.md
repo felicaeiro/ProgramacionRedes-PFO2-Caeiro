@@ -56,7 +56,7 @@ El cliente ofrece un menú para:
 - `POST /registro` — Registrarse con JSON `{ "usuario": "<nombre>", "contraseña": "<clave>" }`
 - `POST /login` — Iniciar sesión con JSON `{ "usuario": "<nombre>", "contraseña": "<clave>" }`
 - `GET /usuarios` — Obtener la lista de usuarios registrados (solo `id` y `usuario`)
-- `GET /tareas`
+- `GET /tareas` — Página web interactiva con un único formulario para registro y login. El formulario usa dos botones distintos para enviar a `/registro` o `/login`.
 
 ## Base de datos
 
